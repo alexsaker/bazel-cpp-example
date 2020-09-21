@@ -24,5 +24,5 @@ curl http://localhost:9080/
 ## TODO
 - [x] Write first app: app1
 - [x] Write library used by app1  
-- [] Add multiple routes 
-- [] Add tests  
+- [ ] Add multiple routes 
+- [ ] Add tests  
