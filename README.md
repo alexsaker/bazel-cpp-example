@@ -7,7 +7,7 @@
 
 ## Build solution
 ```bash
-bazel build --cxxopt='-std=c++17'  //apps/app1:server
+bazel build  //apps/app1:server
 ``` 
 
 ## Execute solution

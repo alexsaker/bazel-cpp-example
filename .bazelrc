@@ -6,7 +6,6 @@
 # --disk_cache for build artifacts
 
 
-# build --repository_cache=~/.cache/bazel-repo
+build --cxxopt='-std=c++17' --disk_cache=~/.cache/bazel-disk --repository_cache=~/.cache/bazel-repo
 fetch --repository_cache=~/.cache/bazel-repo
 query --repository_cache=~/.cache/bazel-repo
-# build --disk_cache=~/.cache/bazel-disk
