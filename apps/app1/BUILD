@@ -18,7 +18,7 @@ cc_binary(
     srcs = ["server.cc","server.h"],
     deps = [
         "//libs/utils:time-utils",
-    #    "@github_nlohmann_json//:json",
+       "@github_nlohmann_json//:json",
    #":crow",
     ],
     linkopts = ["-pthread","-lpistache","-lssl" ,"-lcrypto"],
