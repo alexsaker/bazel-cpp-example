@@ -19,10 +19,27 @@ bazel build  //apps/app1:server
 ```bash
 curl http://localhost:9080/
 ``` 
-
+## Create base image and push to repository
+```bash
+docker build -f ./docker/Dockerfile.base  -t asaker/myubuntu:1.0 .
+docker push  asaker/myubuntu:1.0  
+```
+## Run base docker image
+```bash
+ bazel run @ubuntu_with_pistache//image
+```
+## Build server image
+```bash
+  bazel run //apps/app1:v1
+```
+## Run container image
+```bash
+ docker run  -p 9080:9080 --name app1   asaker/apps/app1:v1
+```
 
 ## TODO
 - [x] Write first app: app1
 - [x] Write library used by app1  
 - [ ] Add multiple routes 
-- [ ] Add tests  
+- [x] Add tests  
+- [x] Add Docker build

@@ -23,3 +23,16 @@ cc_binary(
     ],
     linkopts = ["-pthread","-lpistache","-lssl" ,"-lcrypto"],
 )
+
+
+load("@io_bazel_rules_docker//container:container.bzl", "container_image")
+container_image(
+    name = "v1",
+    repository = "asaker",
+    base = "@ubuntu_with_pistache//image",
+    files = [":server"],
+    entrypoint = ["./server"],
+    ports= ["9080"],
+    user = "bazel",
+    stamp = True
+)

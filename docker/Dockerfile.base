@@ -1,0 +1,8 @@
+FROM ubuntu:20.04
+
+RUN  apt-get update && apt-get install -y software-properties-common &&\
+ add-apt-repository ppa:pistache+team/unstable &&\
+  apt-get update && apt-get install -y \
+    libpistache-dev
+RUN adduser -u 1001 bazel
+

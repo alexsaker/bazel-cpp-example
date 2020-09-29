@@ -1,8 +1,6 @@
 workspace(name = "bazel_cpp_example")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive","http_file")
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-
 http_archive(
     name = "gtest",
     url = "https://github.com/google/googletest/archive/release-1.7.0.zip",
@@ -19,22 +17,59 @@ http_archive(
    ],
    build_file = "@//third-party:nlohmann-json.BUILD",
 )
+## General rules
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+## rules_docker
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# git_repository(
-#     name = "com_github_nelhage_rules_boost",
-#     commit = "1e3a69bf2d5cd10c34b74f066054cd335d033d71",
-#     remote = "https://github.com/nelhage/rules_boost",
-#     shallow_since = "1591047380 -0700",
-# )
+# Download the rules_docker repository at release v0.14.4
+http_archive(
+    name = "io_bazel_rules_docker",
+    sha256 = "4521794f0fba2e20f3bf15846ab5e01d5332e587e9ce81629c7f96c793bb7036",
+    strip_prefix = "rules_docker-0.14.4",
+    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.14.4/rules_docker-v0.14.4.tar.gz"],
+)
 
-# load("@com_github_nelhage_rules_boost//:boost/boost.bzl", "boost_deps")
-# boost_deps()
-# http_file(
-#     name = "crow",
-#     downloaded_file_path = "crow_all.h",
-#     sha256="52be1441573aafad85ba2414a77c51c66640890a128829d181db8a0c48b9620e",
-#     urls=["https://github.com/ipkn/crow/releases/download/v0.1/crow_all.h"],
-# )
+load(
+    "@io_bazel_rules_docker//toolchains/docker:toolchain.bzl",
+    docker_toolchain_configure="toolchain_configure"
+)
 
+docker_toolchain_configure(
+    name = "docker_config",
+    docker_path = "/usr/bin/docker",
+)
+
+load("@io_bazel_rules_docker//repositories:repositories.bzl", container_repositories = "repositories",)
+container_repositories()
+
+load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
+container_deps()
+
+load("@io_bazel_rules_docker//repositories:pip_repositories.bzl", "pip_deps")
+pip_deps()
+
+load(
+    "@io_bazel_rules_docker//container:container.bzl",
+    "container_pull",
+)
+
+load(
+    "@io_bazel_rules_docker//cc:image.bzl",
+    _cc_image_repos = "repositories",
+)
+
+# load CXX optimized docker images
+_cc_image_repos()
+
+
+
+load("@io_bazel_rules_docker//container:container.bzl", "container_pull")
+
+container_pull(
+    name = "ubuntu_with_pistache",
+    registry = "index.docker.io",
+    repository = "asaker/myubuntu",
+    tag = "1.0",
+)
