@@ -15,18 +15,18 @@ public:
   void onRequest(const Http::Request &request, Http::ResponseWriter response) override
   {
     UNUSED(request);
-    nlohmann::json obj = {
-        {"pi", 3.141},
-        {"happy", true},
-        {"name", "Niels"},
-        {"nothing", nullptr},
-        {"answer", {{"everything", 42}}},
-        {"list", {1, 0, 2}},
-        {"object", {{"currency", "USD"}, {"value", 42.99}}}};
-    std::cout << obj.dump(4) << std::endl;
+    // nlohmann::json obj = {
+    //     {"pi", 3.141},
+    //     {"happy", true},
+    //     {"name", "Niels"},
+    //     {"nothing", nullptr},
+    //     {"answer", {{"everything", 42}}},
+    //     {"list", {1, 0, 2}},
+    //     {"object", {{"currency", "USD"}, {"value", 42.99}}}};
+    // std::cout << obj.dump(4) << std::endl;
 
-    // response.send(Pistache::Http::Code::Ok, Timestamp::toJson());
-     response.send(Pistache::Http::Code::Ok, obj.dump(4));
+    response.send(Pistache::Http::Code::Ok, Timestamp::toJson());
+    //  response.send(Pistache::Http::Code::Ok, obj.dump(4));
   }
 };
 int main(void)
