@@ -43,5 +43,6 @@ container_push(
    format = "Docker",
    registry = "index.docker.io",
    repository = "asaker/bazel-app1",
-   tag = "v1",
+  # tag = "v1",
+  tag = "{BUILD_EMBED_LABEL}"
 )

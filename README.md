@@ -33,15 +33,24 @@ docker push  asaker/myubuntu:1.0
   bazel run //apps/app1:v1
 ```
 ## Push image to repo
-Prerequisites: Having logged to docker registry
+Prerequisites: 
+- Having logged to docker registry
+- Having installed gitversion on host
+- Having installed jq
+
 ```bash
+# You can fix label version in app1 BUILD file
 bazel run //apps/app1:app1-v1
+# If you wish to use a constructed version you can use the following command
+
+export GIT_SEMVER=$(gitversion | jq -r '.SemVer')
+bazel run //apps/app1:app1-v1 --embed_label="$GIT_SEMVER"
 ```
 
 
 ## Run container image
 ```bash
- docker run  -p 9080:9080 --name app1   asaker/apps/app1:v1
+docker run  -p 9080:9080 --name app1   asaker/apps/app1:v1
 ```
 
 ## TODO
@@ -49,3 +58,5 @@ bazel run //apps/app1:app1-v1
 - [x] Write library used by app1  
 - [x] Add tests  
 - [x] Add Docker build
+- [x] Add Docker push 
+- [x] Add Docker push with label from gitversion 
