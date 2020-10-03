@@ -25,7 +25,7 @@ cc_binary(
 )
 
 
-load("@io_bazel_rules_docker//container:container.bzl", "container_image")
+load("@io_bazel_rules_docker//container:container.bzl", "container_image","container_push")
 container_image(
     name = "v1",
     repository = "asaker",
@@ -35,4 +35,13 @@ container_image(
     ports= ["9080"],
     user = "bazel",
     stamp = True
+)
+
+container_push(
+   name = "app1-v1",
+   image = ":v1",
+   format = "Docker",
+   registry = "index.docker.io",
+   repository = "asaker/bazel-app1",
+   tag = "v1",
 )

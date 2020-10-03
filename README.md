@@ -32,6 +32,13 @@ docker push  asaker/myubuntu:1.0
 ```bash
   bazel run //apps/app1:v1
 ```
+## Push image to repo
+Prerequisites: Having logged to docker registry
+```bash
+bazel run //apps/app1:app1-v1
+```
+
+
 ## Run container image
 ```bash
  docker run  -p 9080:9080 --name app1   asaker/apps/app1:v1
@@ -40,6 +47,5 @@ docker push  asaker/myubuntu:1.0
 ## TODO
 - [x] Write first app: app1
 - [x] Write library used by app1  
-- [ ] Add multiple routes 
 - [x] Add tests  
 - [x] Add Docker build
