@@ -53,6 +53,15 @@ bazel run //apps/app1:app1-v1 --embed_label="$GIT_SEMVER"
 docker run  -p 9080:9080 --name app1   asaker/apps/app1:v1
 ```
 
+## RUN container tests
+```bash
+# If your user is in the docker group
+bazel run //apps/app1:app1-test
+
+# If your user wasn't added to the docker group you can use sudo in front og the command
+sudo bazel run //apps/app1:app1-test
+```
+
 ## TODO
 - [x] Write first app: app1
 - [x] Write library used by app1  
@@ -60,3 +69,4 @@ docker run  -p 9080:9080 --name app1   asaker/apps/app1:v1
 - [x] Add Docker build
 - [x] Add Docker push 
 - [x] Add Docker push with label from gitversion 
+- [x] Added basic container test 

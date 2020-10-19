@@ -1,4 +1,6 @@
 load("@rules_cc//cc:defs.bzl","cc_binary")
+load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
+
 
 # https://docs.bazel.build/versions/master/be/c-cpp.html#cc_library
 #cc_library(
@@ -34,6 +36,9 @@ container_image(
     entrypoint = ["./server"],
     ports= ["9080"],
     user = "bazel",
+    volumes=["/data"],
+    workdir="/app",
+    env={ "foo": "baz" },
     stamp = True
 )
 
@@ -45,4 +50,11 @@ container_push(
    repository = "asaker/bazel-app1",
   # tag = "v1",
   tag = "{BUILD_EMBED_LABEL}"
+)
+
+
+container_test(
+    name = "app1-test",
+    configs = ["server-container-test.json"],
+    image = ":v1",
 )

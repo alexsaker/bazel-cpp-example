@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "2.0.0",
+  "metadataTest": {
+    "env": [
+      {
+        "key": "foo",
+        "value": "baz"
+      }
+    ],
+    "exposedPorts": [
+      "9080"
+    ],
+    "volumes": [
+      "/data"
+    ],
+    "entrypoint": ["./server"],
+    "cmd": [
+      "/bin/bash"
+    ],
+    "workdir": "/app"
+  }
+}

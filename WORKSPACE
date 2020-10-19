@@ -19,9 +19,17 @@ http_archive(
 )
 ## General rules
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-
+http_archive(
+    name = "bazel_skylib",
+    urls = [
+        "https://github.com/bazelbuild/bazel-skylib/releases/download/1.0.3/bazel-skylib-1.0.3.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.0.3/bazel-skylib-1.0.3.tar.gz",
+    ],
+    sha256 = "1c531376ac7e5a180e0237938a2536de0c54d93f5c278634818e0efc952dd56c",
+)
+load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
+bazel_skylib_workspace()
 ## rules_docker
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # Download the rules_docker repository at release v0.14.4
 http_archive(
@@ -41,7 +49,9 @@ docker_toolchain_configure(
     docker_path = "/usr/bin/docker",
 )
 
-load("@io_bazel_rules_docker//repositories:repositories.bzl", container_repositories = "repositories",)
+
+
+load("@io_bazel_rules_docker//repositories:repositories.bzl", container_repositories = "repositories")
 container_repositories()
 
 load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
@@ -73,3 +83,24 @@ container_pull(
     repository = "asaker/myubuntu",
     tag = "1.0",
 )
+
+
+
+
+
+
+
+load(
+    "@io_bazel_rules_docker//contrib:test.bzl",
+    "container_test",
+)
+
+# io_bazel_rules_go is the dependency of container_test rules.
+# http_archive(
+#     name = "io_bazel_rules_go",
+#     url = "https://github.com/bazelbuild/rules_go/releases/download/0.9.0/rules_go-0.9.0.tar.gz",
+#     sha256 = "4d8d6244320dd751590f9100cf39fd7a4b75cd901e1f3ffdfd6f048328883695",
+# )
+# load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+# go_rules_dependencies()
+# go_register_toolchains()
